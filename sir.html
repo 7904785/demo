@@ -1,0 +1,66 @@
+<html>
+<head>
+<style>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input[type="submit"] {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+<form action="#" method="post" enctype="multipart/form-data">
+  <input type="file" name="fileToUpload" id="fileToUpload">
+  <input type="submit" value="Upload File" name="submit">
+</form>
+<script>
+function uploadFile() {
+  var file = document.getElementById("fileToUpload").files[0];
+  var formData = new FormData();
+  formData.append("fileToUpload", file);
+
+  var xhr = new XMLHttpRequest();
+  xhr.open("POST", "upload_file.php", true);
+  xhr.onload = function() {
+    if (this.status == 200) {
+      var response = JSON.parse(this.responseText);
+      var message = response.message;
+      var url = response.url;
+      var link = "<a href='" + url + "'>" + url + "</a>";
+      document.getElementById("result").innerHTML = message + " " + link;
+    }
+  };
+  xhr.send(formData);
+}
+</script>
+<?php include 'php.php'?> 
+
+</body>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
